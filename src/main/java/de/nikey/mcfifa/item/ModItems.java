@@ -14,7 +14,7 @@ public class ModItems {
             DeferredRegister.create(ForgeRegistries.ITEMS, MCFIFA.MODID);
 
 
-    public static final RegistryObject<Item> FOOTBALL_BOOTS = ITEMS.register("football_boots",
+    public static final RegistryObject<Item> FOOTBALL_BOOTS = ITEMS.register("football",
             () -> new ArmorItem(ModFoodballBoots.FOODBALL_BOOTS, ArmorItem.Type.BOOTS, new Item.Properties()));
 
     public static void register(IEventBus eventBus) {

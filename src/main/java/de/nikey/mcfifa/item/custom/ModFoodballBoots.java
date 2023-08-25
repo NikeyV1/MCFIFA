@@ -1,6 +1,7 @@
 package de.nikey.mcfifa.item.custom;
 
 import de.nikey.mcfifa.MCFIFA;
+import de.nikey.mcfifa.item.ModItems;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ArmorItem;
@@ -10,8 +11,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import java.util.function.Supplier;
 
 public enum ModFoodballBoots implements ArmorMaterial {
-    FOODBALL_BOOTS("football_boots",26, new int[]{ 5, 7, 5, 4 },25,
-            SoundEvents.ARMOR_EQUIP_LEATHER,1f ,0f,null);
+    FOODBALL_BOOTS("football", 30, new int[]{ 5, 7, 5, 4 }, 30,
+            SoundEvents.ARMOR_EQUIP_GOLD, 1f, 0f, null);
 
     private final String name;
     private final int durabilityMultiplier;
@@ -22,9 +23,10 @@ public enum ModFoodballBoots implements ArmorMaterial {
     private final float knockbackResistance;
     private final Supplier<Ingredient> repairIngredient;
 
-    private static final int[] BASE_DURABILITY = { 11, 16, 15, 13 };
+    private static final int[] BASE_DURABILITY = { 11, 16, 16, 13 };
 
-    ModFoodballBoots(String name, int durabilityMultiplier, int[] protectionAmounts, int enchantmentValue, SoundEvent equipSound, float toughness, float knockbackResistance, Supplier<Ingredient> repairIngredient) {
+    ModFoodballBoots(String name, int durabilityMultiplier, int[] protectionAmounts, int enchantmentValue, SoundEvent equipSound,
+                      float toughness, float knockbackResistance, Supplier<Ingredient> repairIngredient) {
         this.name = name;
         this.durabilityMultiplier = durabilityMultiplier;
         this.protectionAmounts = protectionAmounts;
@@ -37,7 +39,7 @@ public enum ModFoodballBoots implements ArmorMaterial {
 
     @Override
     public int getDurabilityForType(ArmorItem.Type pType) {
-        return BASE_DURABILITY[pType.ordinal() * durabilityMultiplier];
+        return BASE_DURABILITY[pType.ordinal()] * this.durabilityMultiplier;
     }
 
     @Override
@@ -62,7 +64,7 @@ public enum ModFoodballBoots implements ArmorMaterial {
 
     @Override
     public String getName() {
-        return MCFIFA.MODID+ ":" + this.name;
+        return MCFIFA.MODID + ":" + this.name;
     }
 
     @Override

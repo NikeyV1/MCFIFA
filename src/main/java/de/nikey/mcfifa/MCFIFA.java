@@ -1,6 +1,7 @@
 package de.nikey.mcfifa;
 
 import com.mojang.logging.LogUtils;
+import de.nikey.mcfifa.events.ModEvents;
 import de.nikey.mcfifa.item.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
@@ -45,6 +46,7 @@ public class MCFIFA {
 
 
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(new ModEvents());
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
         modEventBus.addListener(this::addCreative);
     }
@@ -56,7 +58,7 @@ public class MCFIFA {
 
     }
     private void addCreative(BuildCreativeModeTabContentsEvent event){
-        if (event.getTabKey() == CreativeModeTabs.INGREDIENTS){
+        if (event.getTabKey() == CreativeModeTabs.COMBAT){
             event.accept(ModItems.FOOTBALL_BOOTS);
         }
     }
