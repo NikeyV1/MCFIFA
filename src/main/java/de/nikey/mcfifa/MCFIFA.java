@@ -1,12 +1,16 @@
 package de.nikey.mcfifa;
 
 import com.mojang.logging.LogUtils;
+import de.nikey.mcfifa.block.ModBlocks;
 import de.nikey.mcfifa.events.ModEvents;
 import de.nikey.mcfifa.item.ModItems;
+import de.nikey.mcfifa.item.custom.ModFoodballBoots;
+import de.nikey.mcfifa.villager.ModVilligers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
@@ -39,7 +43,7 @@ import org.slf4j.Logger;
 public class MCFIFA {
 
     public static final String MODID = "mcfifa";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
     private int sprintTickCounter = 0;
     private int times;
 
@@ -47,6 +51,8 @@ public class MCFIFA {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
         ModItems.register(modEventBus);
+        ModVilligers.register(modEventBus);
+        ModBlocks.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 
@@ -66,6 +72,7 @@ public class MCFIFA {
     private void addCreative(BuildCreativeModeTabContentsEvent event){
         if (event.getTabKey() == CreativeModeTabs.COMBAT){
             event.accept(ModItems.FOOTBALL_BOOTS);
+            event.accept(ModBlocks.HOPE_BLOCK.get());
         }
     }
 
@@ -74,45 +81,41 @@ public class MCFIFA {
         LOGGER.info("Mod starting!");
     }
 
+
+
     @SubscribeEvent
     public void onLivingUpdate(LivingEvent.LivingTickEvent event) {
         LivingEntity entity = event.getEntity();
 
-        // Überprüfe, ob der Spieler Diamantschuhe trägt und sprintet
-        if (entity.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.FEET).getItem().equals(ModItems.FOOTBALL_BOOTS) && entity instanceof Player) {
-            Player player = (Player) entity;
-            player.sendSystemMessage(Component.literal("tick"));
-            if (entity.isSprinting()){
-                sprintTickCounter++;
-                if (sprintTickCounter >= 20) {
-                    times++;
-                    sprintTickCounter = 0;
-                    player.sendSystemMessage(Component.literal("You speed increased!"));
-                    if (times == 1){
-                        increaseSprintSpeed(player,1.2f);
-                    } else if (times == 2){
-                        increaseSprintSpeed(player,1.5f);
-                    } else if (times == 3) {
-                        increaseSprintSpeed(player,1.7f);
-                    }else if (times == 4){
-                        times=0;
-                        increaseSprintSpeed(player,2.0f);
+        if (entity instanceof Player player) {
+            ItemStack boots = player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.FEET);
+            if (!boots.isEmpty() ){
+                if (boots.getRarity() == Rarity.EPIC){
+                    if (player.isSprinting()){
+                        sprintTickCounter++;
+                        if (sprintTickCounter >= 20) {
+                            times++;
+                            sprintTickCounter = 0;
+                            if (times == 3){
+                                player.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.2F);
+                            } else if (times == 5){
+                                player.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.3F);
+                            } else if (times == 7) {
+                                player.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.4F);
+                            }else if (times == 10){
+                                player.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.8F);
+                                player.sendSystemMessage(Component.literal("You speed is at maximum!"));
+                            }else if (times >12){
+                                times=12;
+                            }
+                        }
+                    }else {
+                        player.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.1);
+                        sprintTickCounter = 0;
+                        times = 0;
                     }
                 }
-            }else {
-                sprintTickCounter = 0;
-            }
-
-        }else{
-            if (entity instanceof Player){
-                Player player = (Player) entity;
-                player.getAbilities().setWalkingSpeed(0.1f);
             }
         }
-    }
-    private void increaseSprintSpeed(Player player,float f) {
-        // Erhöhen Sie die Geschwindigkeit des Spielers um 10% (Multiplikation mit 1.1)
-        float newSpeed = player.getAbilities().getWalkingSpeed() * 1.1f;
-        player.getAbilities().setWalkingSpeed(newSpeed);
     }
 }
