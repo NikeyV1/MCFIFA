@@ -67,6 +67,7 @@ public class MCFIFA {
         // Some common setup code
         LOGGER.info("HELLO FROM COMMON SETUP");
         LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
+        //event.enqueueWork(ModVilligers::registerPOIs);
 
     }
     private void addCreative(BuildCreativeModeTabContentsEvent event){

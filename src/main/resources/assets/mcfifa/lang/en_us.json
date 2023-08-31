@@ -1,5 +1,9 @@
 {
   "item.mcfifa.football": "Football Boots",
 
-  "block.mcfifa.hope_block": "Block of Hope"
+  "item.mcfifa.fifa_pack": "Fifa Pack",
+
+  "block.mcfifa.hope_block": "Block of Hope",
+
+  "entity.minecraft.villager.mcfifa.pack_master" : "Pack Master"
 }
