@@ -1,22 +1,19 @@
 package de.nikey.mcfifa.item.custom;
 
-import de.nikey.mcfifa.item.ModItems;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.context.UseOnContext;
-import org.checkerframework.checker.units.qual.C;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class PackCardOneItem extends Item {
     public PackCardOneItem(Properties pProperties) {
         super(pProperties);
     }
-    @Override
-    public InteractionResult useOn(UseOnContext context) {
-        Player player = context.getPlayer();
+    @SubscribeEvent
+    public PlayerInteractEvent.RightClickItem useOn(PlayerInteractEvent.RightClickItem event) {
+        Player player = event.getEntity();
         player.sendSystemMessage(Component.literal("Gay"));
-        return super.useOn(context);
+        return event;
     }
-
 }
