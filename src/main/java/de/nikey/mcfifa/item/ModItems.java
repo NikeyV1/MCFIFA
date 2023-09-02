@@ -2,11 +2,9 @@ package de.nikey.mcfifa.item;
 
 import de.nikey.mcfifa.MCFIFA;
 import de.nikey.mcfifa.item.custom.ModFoodballBoots;
-import de.nikey.mcfifa.item.custom.PackCardOneItem;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -23,9 +21,10 @@ public class ModItems {
             () -> new ArmorItem(ModFoodballBoots.FOODBALL_BOOTS, ArmorItem.Type.BOOTS, new Item.Properties().rarity(EPIC)));
 
     public static final RegistryObject<Item> FIFA_PACK = ITEMS.register("fifa_pack",
-            () -> new PackCardOneItem(new Item.Properties().rarity(Rarity.UNCOMMON)));
+            () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }
+
 }
