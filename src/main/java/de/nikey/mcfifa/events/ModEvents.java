@@ -49,7 +49,7 @@ public class ModEvents {
             int villagerLevel = 1;
 
             trades.get(villagerLevel).add((trader, rand) -> new MerchantOffer(
-                    new ItemStack(Items.NETHERITE_BLOCK, 1),
+                    new ItemStack(Items.EMERALD, 12),
                     stack,3,8,0.02F));
         }
     }
