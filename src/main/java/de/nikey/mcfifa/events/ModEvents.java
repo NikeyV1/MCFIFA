@@ -32,7 +32,7 @@ public class ModEvents {
             int count = item.getCount();
             item.setCount(count-1);
 
-            if (i == 20){
+            if (i == 100){
                 p.getInventory().add(ModItems.FOOTBALL_BOOTS.get().getDefaultInstance());
             }else {
                 p.getInventory().add(Items.WHEAT_SEEDS.getDefaultInstance());
