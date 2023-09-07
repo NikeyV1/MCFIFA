@@ -61,6 +61,7 @@ public class MCFIFA {
             event.accept(ModItems.FOOTBALL_BOOTS);
             event.accept(ModBlocks.HOPE_BLOCK.get());
             event.accept(ModItems.FIFA_PACK.get());
+            event.accept(ModItems.TRIKO.get());
         }
     }
 

@@ -12,7 +12,10 @@ import java.util.function.Supplier;
 
 public enum ModFoodballBoots implements ArmorMaterial {
     FOODBALL_BOOTS("football", 30, new int[]{ 5, 7, 5, 4 }, 30,
-            SoundEvents.ARMOR_EQUIP_GOLD, 1f, 0f, null);
+            SoundEvents.ARMOR_EQUIP_GOLD, 1f, 0f, null),
+    TRIKOS("triko",30,new int[]{5,6,5,4},30,
+            SoundEvent.ARMOR_EQUIP_LEATHER,1f,0f,null);        
+    
 
     private final String name;
     private final int durabilityMultiplier;
